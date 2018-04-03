@@ -1,58 +1,64 @@
-﻿/**
-T. J. Flesher
-Assignment 1.1
-Bellevue University
-CIS243-T301
-Write an application that reads three integers, adds all three together and computes an average of the three entries
-    and computes any remainder of the integer division.
-A remainder represents the modulus result of dividing an even by an odd number or vice versa. Display the output.
-**/
+﻿//T. J. Flesher
+//Assignment 4.1
+// Develop a C# console application that will determine the gross pay for each of three employees.
+//CIS243-T301 - Bellevue University
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Assignment1._1
+namespace GrossPay
 {
-    class Program
+    class Assignment_4_TFlesher
     {
+        const decimal BASE_HOURS = 40m;
+        const decimal OT_RATE = 1.5m;
+
         static void Main(string[] args)
         {
-            int input1;
-            int input2;
-            int input3;
-            const int number_of_inputs = 3;
-            int average;
-            int remainder;
+            decimal hoursWorked;
+            decimal hourlyPayRate;
+            decimal basePay;
+            decimal otHours;
+            decimal otPay;
+            decimal grossPay;
 
-            //get user input, check validation
-            Console.Write("Enter an integer score: ");
-            while(!int.TryParse(Console.ReadLine(), out input1))
+            //Implement the inputs and calculations
+            int i = 1;
+            while(i <= 3)
             {
-                Console.WriteLine("Please enter a valid numerical value!");
-                Console.Write("Please enter an integer score: ");
-            }
-            Console.Write("Enter an integer score: ");
-            while (!int.TryParse(Console.ReadLine(), out input2))
-            {
-                Console.WriteLine("Please enter a valid numerical value!");
-                Console.Write("Please enter an integer score: ");
-            }
-            Console.Write("Enter an integer score: ");
-            while (!int.TryParse(Console.ReadLine(), out input3))
-            {
-                Console.WriteLine("Please enter a valid numerical value!");
-                Console.Write("Please enter an integer score: ");
-            }
+                //Get/Check user input
+                Console.Write("Enter hourly rate: ");
+                while(!decimal.TryParse(Console.ReadLine(), out hourlyPayRate))
+                {
+                    Console.WriteLine("Please enter a valid numerical value!");
+                    Console.Write("Enter hourly rate again: ");
+                }
+                Console.Write("Enter hours worked: ");
+                while (!decimal.TryParse(Console.ReadLine(), out hoursWorked))
+                {
+                    Console.WriteLine("Please enter a valid numerical value!");
+                    Console.Write("Enter hours worked again: ");
+                }
+                //determine gross pay
+                if (hoursWorked > BASE_HOURS)
+                {
+                    basePay = hourlyPayRate * BASE_HOURS;
+                    otHours = hoursWorked - BASE_HOURS;
+                    otPay = otHours * hourlyPayRate * OT_RATE;
+                    grossPay = basePay + otPay;
+                }
+                else
+                {
+                    grossPay = hoursWorked * hourlyPayRate;
+                }
+                //display results
+                Console.WriteLine($"Pay for employee {i} is {grossPay:C}\n");
+                
+                i += 1; //increment count
+            };//end while
 
-            //calculation
-            average = (input1 + input2 + input3) / number_of_inputs;
-            remainder = average % number_of_inputs;
-            Console.WriteLine("Average of " + input1 + ", " + input2 + ", " + input3 + " is " + average);
-            Console.WriteLine("Remainder of " + remainder);
-            Console.ReadLine();
-            Console.WriteLine("Press any key to continue...");
         }
     }
 }
